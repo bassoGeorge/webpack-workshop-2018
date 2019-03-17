@@ -1,20 +1,27 @@
-const webpack = require('webpack')
+const webpack           = require('webpack')
 const HtmlWebpackPlugin = require("html-webpack-plugin")
+const WebpackMerge      = require('webpack-merge')
 
-module.exports = ({ mode }) => {
+const modeConfig = env => require(`./build-utils/webpack.${env.mode}`)(env)
+
+module.exports = env => {
+
+	const {mode = 'production', presets = []} = env
 
 	// env variable comes into the webpack function
 	// env can be set on console using `--env.key value`
 
-	return {
-		mode,
-		output: {
-			// path defaults to ./dist
-			filename: 'bundle.js'
+	return WebpackMerge({
+			mode,
+			output : {
+				// path defaults to ./dist
+				filename: 'bundle.js'
+			},
+			plugins: [
+				new HtmlWebpackPlugin(),
+				new webpack.ProgressPlugin()
+			]
 		},
-		plugins: [
-			new HtmlWebpackPlugin(),
-			new webpack.ProgressPlugin()
-		]
-	}
+		modeConfig(env)
+	)
 }
