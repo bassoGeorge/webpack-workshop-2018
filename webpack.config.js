@@ -1,3 +1,6 @@
+const webpack = require('webpack')
+const HtmlWebpackPlugin = require("html-webpack-plugin")
+
 module.exports = ({ mode }) => {
 
 	// env variable comes into the webpack function
@@ -8,6 +11,10 @@ module.exports = ({ mode }) => {
 		output: {
 			// path defaults to ./dist
 			filename: 'bundle.js'
-		}
+		},
+		plugins: [
+			new HtmlWebpackPlugin(),
+			new webpack.ProgressPlugin()
+		]
 	}
 }
