@@ -1,0 +1,10 @@
+footer {
+	height: 100px;
+	width: 100%;
+	background: yellow;
+	border: 1px solid red;
+}
+
+.footer-bottom {
+	color: blue;
+}
