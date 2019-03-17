@@ -2,14 +2,15 @@ const webpack           = require('webpack')
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const WebpackMerge      = require('webpack-merge')
 
-const modeConfig = env => require(`./build-utils/webpack.${env.mode}`)(env)
+const modeConfig   = env => require(`./build-utils/webpack.${env.mode}`)(env)
+const presetConfig = require('./build-utils/load-presets')
 
-module.exports = env => {
-
-	const {mode = 'production', presets = []} = env
+module.exports = ({mode = 'production', presets = [], ...rest}) => {
 
 	// env variable comes into the webpack function
 	// env can be set on console using `--env.key value`
+
+	const envWithDefaults = { mode, presets, ...rest }
 
 	return WebpackMerge({
 			mode,
@@ -22,7 +23,7 @@ module.exports = env => {
 					{
 						test: /\.jpe?g$/,
 						use : [{
-							loader: 'url-loader',
+							loader : 'url-loader',
 							options: {
 								limit: 5000
 							}
@@ -35,6 +36,7 @@ module.exports = env => {
 				new webpack.ProgressPlugin()
 			]
 		},
-		modeConfig(env)
+		modeConfig(envWithDefaults),
+		presetConfig(envWithDefaults)
 	)
 }
