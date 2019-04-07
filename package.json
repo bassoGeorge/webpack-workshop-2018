@@ -9,7 +9,8 @@
     "debug": "node --inspect --inspect-brk ./node_modules/webpack/bin/webpack.js",
     "prod": "npm run webpack -- --env.mode production",
     "prod:analyze": "npm run prod -- --env.presets analyze",
-    "dev": "npm run webpack-dev-server -- --env.mode development --hot",
+    "prod:compress": "npm run prod -- --env.presets compress",
+    "dev": "npm run webpack-dev-server -- --env.mode development --hot --env.presets compress",
     "prod:debug": "npm run debug -- --env.mode production",
     "dev:debug": "npm run debug -- --env.mode development"
   },
@@ -25,6 +26,7 @@
     "@babel/core": "^7.0.0-beta.46",
     "@babel/preset-env": "^7.0.0-beta.46",
     "babel-loader": "^8.0.0-beta",
+    "compression-webpack-plugin": "^2.0.0",
     "css-loader": "^0.28.11",
     "file-loader": "^1.1.11",
     "fork-ts-checker-webpack-plugin": "^0.4.1",
